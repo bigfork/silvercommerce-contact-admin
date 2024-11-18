@@ -9,6 +9,7 @@ use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use Colymba\BulkManager\BulkAction\EditHandler;
 use Colymba\BulkManager\BulkAction\DeleteHandler;
+use SilverStripe\Security\Security;
 
 /**
  * A tag for keyword descriptions of a contact.
@@ -23,11 +24,11 @@ use Colymba\BulkManager\BulkAction\DeleteHandler;
 class ContactTag extends DataObject implements PermissionProvider
 {
     private static $table_name = 'ContactTag';
-    
+
     private static $singular_name = 'Tag';
 
     private static $plural_name = 'Tags';
-        
+
     private static $db = [
         'Title' => 'Varchar(255)',
     ];
@@ -35,7 +36,7 @@ class ContactTag extends DataObject implements PermissionProvider
     private static $belongs_many_many = [
         'Contacts' => Contact::class,
     ];
-    
+
     private static $summary_fields = [
         'Title',
         'Contacts.Count'
@@ -53,7 +54,7 @@ class ContactTag extends DataObject implements PermissionProvider
             $manager = new BulkManager();
             $manager->removeBulkAction(DeleteHandler::class);
             $manager->removeBulkAction(EditHandler::class);
-            
+
             $config = $contacts_field->getConfig();
             $config->addComponent($manager);
 
@@ -67,7 +68,7 @@ class ContactTag extends DataObject implements PermissionProvider
 
         return $fields;
     }
-    
+
     public function providePermissions()
     {
         return [
@@ -103,11 +104,11 @@ class ContactTag extends DataObject implements PermissionProvider
         if ($extended !== null) {
             return $extended;
         }
-        
+
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
-            
+
         if ($member && Permission::checkMember($member->ID, "CONTACTS_TAGS_MANAGE")) {
             return true;
         }
@@ -122,11 +123,11 @@ class ContactTag extends DataObject implements PermissionProvider
         if ($extended !== null) {
             return $extended;
         }
-        
+
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
-            
+
         if ($member && Permission::checkMember($member->ID, "CONTACTS_TAGS_MANAGE")) {
             return true;
         }
@@ -141,11 +142,11 @@ class ContactTag extends DataObject implements PermissionProvider
         if ($extended !== null) {
             return $extended;
         }
-        
+
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
-            
+
         if ($member && Permission::checkMember($member->ID, "CONTACTS_TAGS_MANAGE")) {
             return true;
         }
@@ -160,11 +161,11 @@ class ContactTag extends DataObject implements PermissionProvider
         if ($extended !== null) {
             return $extended;
         }
-        
+
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
-            
+
         if ($member && Permission::checkMember($member->ID, "CONTACTS_TAGS_DELETE")) {
             return true;
         }
