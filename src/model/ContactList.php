@@ -9,6 +9,7 @@ use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use Colymba\BulkManager\BulkAction\EditHandler;
 use Colymba\BulkManager\BulkAction\DeleteHandler;
+use SilverStripe\Security\Security;
 
 /**
  * A container for grouping contacts
@@ -118,7 +119,7 @@ class ContactList extends DataObject implements PermissionProvider
         }
 
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
 
         if ($member && Permission::checkMember($member->ID, "CONTACTS_LISTS_MANAGE")) {
@@ -137,7 +138,7 @@ class ContactList extends DataObject implements PermissionProvider
         }
 
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
 
         if ($member && Permission::checkMember($member->ID, "CONTACTS_LISTS_MANAGE")) {
@@ -156,7 +157,7 @@ class ContactList extends DataObject implements PermissionProvider
         }
 
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
    
         if ($member && Permission::checkMember($member->ID, "CONTACTS_LISTS_MANAGE")) {
@@ -175,7 +176,7 @@ class ContactList extends DataObject implements PermissionProvider
         }
 
         if (!$member) {
-            $member = Member::currentUser();
+            $member = Security::getCurrentUser();
         }
    
         if ($member && Permission::checkMember($member->ID, "CONTACTS_LISTS_DELETE")) {
